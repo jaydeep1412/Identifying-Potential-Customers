@@ -3,8 +3,7 @@ session_start();
 
 if ( isset($_FILES["file"]["type"]) )
 {
-  $max_size = 500 * 1024; // 500 KB
-  //To make a direcotry if not present already for storing the image
+  $max_size = 7680 * 4320; // 4K Image
   $dir_name = "C:\xampp\htdocs\SE\Upload";
   //if ( is_dir($dir_name) == false )
 	//{
@@ -40,8 +39,10 @@ if ( isset($_FILES["file"]["type"]) )
         {
           $sourcePath = $_FILES["file"]["tmp_name"];
 		  //echo $sourcePath;
-          $targetPath = $_SERVER['DOCUMENT_ROOT'].'/SE/Upload/'.$_FILES["file"]["name"];
-          //echo $targetPath;
+          //$targetPath = $_SERVER['DOCUMENT_ROOT'].'/SE/Upload/'.$_FILES["file"]["name"];
+		  $targetPath = $_SERVER['DOCUMENT_ROOT'].'/SE/Upload/image.jpeg';
+		  
+		  //echo $targetPath;
 		  
 		  move_uploaded_file($sourcePath, $targetPath);
 
