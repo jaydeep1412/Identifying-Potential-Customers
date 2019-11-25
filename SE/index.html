@@ -35,12 +35,6 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Image Upload</a></li>
-            <!--
-			<li><a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form/blob/master/index.html">index.html</a></li>
-            <li><a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form/blob/master/upload-image.js">upload-image.js</a></li>
-            <li><a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form/blob/master/upload-image.php">upload-image.php</a></li>
-            <li><a target="_blank" href="https://github.com/ShinDarth/Bootstrap-image-upload-form/archive/master.zip">Download  full source code</a></li>
-			-->
           </ul>
         </div><!--.nav-collapse -->
       </div>
@@ -50,14 +44,14 @@
 
       <div style="max-width: 650px; margin: auto;">
         <h1 class="page-header">Upload the image for processing</h1>
-        <p class="lead">Select a PNG or JPEG image <!--,having maximum size <span id="max-size"></span> KB.--></p>
+        <p class="lead">Select a PNG, JPG or JPEG image, having maximum size <span id="max-size">8</span> MB.</p>
 
         <form id="upload-image-form" action="" method="post" enctype="multipart/form-data">
           <div id="image-preview-div" style="display: none">
             <label for="exampleInputFile">Selected image:</label>
             <br>
 			<!--It was also having before src="noimage" in next line, line number 60-->
-            <img id="preview-img">
+            <img id="preview-img" src="noimage">
           </div>
           <div class="form-group">
             <input type="file" name="file" id="file" required>
@@ -74,10 +68,41 @@
           </div>
         </div>
         <div id="message"></div>
-      </div>
+		
+		<!--To visualize the locations on the map-->
+		<h3 id="map1" style="display:none;">Location of your potential customers are:</h3>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript">
+		google.charts.load("current", {
+			"packages":["map"],
+			// Note: you will need to get a mapsApiKey for your project.
+			// See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+			"mapsApiKey": "AIzaSyD_86KQGOyddZ_WopqEyoFIZQqYO-mR_xM"
+		});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+			['Lat', 'Long', 'Name'],
+			[37.4232, -122.0853, 'Work'],
+			[37.4289, -122.1697, 'University'],
+			[37.6153, -122.3900, 'Airport'],
+			[37.4422, -122.1731, 'Shopping']
+			]);
 
-      
+			var map = new google.visualization.Map(document.getElementById('map_div'));
+			map.draw(data, {
+			showTooltip: true,
+			showInfoWindow: true
+			});
+		}
+		</script>
+		
+		<div id="map_div" style="width: 400px; height: 300px; display: none"></div>
+		</div>	
+
     </div>
+	
+	
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>

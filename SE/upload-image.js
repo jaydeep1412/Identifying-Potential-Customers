@@ -12,15 +12,16 @@ function selectImage(e) {
   $('#file').css("color", "green");
   $('#image-preview-div').css("display", "block");
   $('#preview-img').attr('src', e.target.result);
-  console.log(e.target.result);
-  $('#preview-img').css('max-width', '550px');
+  //console.log(e.target.result);
+  $('#preview-img').css('max-width', '500px');
 }
+
 
 $(document).ready(function (e) {
 
-  var maxsize = 500 * 1024; // 500 KB
+  //var maxsize = 500 * 1024; // 500 KB
 
-  $('#max-size').html((maxsize/1024).toFixed(2));
+  //$('#max-size').html((maxsize/1024).toFixed(2));
 
   $('#upload-image-form').on('submit', function(e) {
 
@@ -44,7 +45,7 @@ $(document).ready(function (e) {
     });
 
   });
-
+	 
   $('#file').change(function() {
 
     $('#message').empty();
@@ -61,14 +62,15 @@ $(document).ready(function (e) {
       return false;
     }
 
-    if ( file.size > maxsize )
-    {
-      noPreview();
+    //if ( file.size > maxsize )
+    //{
+    
+	//  noPreview();
 
-      $('#message').html('<div class=\"alert alert-danger\" role=\"alert\">The size of image you are attempting to upload is ' + (file.size/1024).toFixed(2) + ' KB, maximum size allowed is ' + (maxsize/1024).toFixed(2) + ' KB</div>');
+    //  $('#message').html('<div class=\"alert alert-danger\" role=\"alert\">The size of of image you are attempting to upload is ' + (file.size/1024).toFixed(2) + ' KB, maximum size allowed is ' + (maxsize/1024).toFixed(2) + ' KB</div>');
 
-      return false;
-    }
+    //  return false;
+    //}
 
     $('#upload-button').removeAttr("disabled");
 
