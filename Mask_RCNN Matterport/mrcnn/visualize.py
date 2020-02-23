@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 from matplotlib import patches,  lines
 from matplotlib.patches import Polygon
 import IPython.display
+import cv2
 
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../")
@@ -53,7 +54,7 @@ def display_images(images, titles=None, cols=4, cmap=None, norm=None,
         plt.imshow(image.astype(np.uint8), cmap=cmap,
                    norm=norm, interpolation=interpolation)
         i += 1
-    plt.show()
+    # plt.show()
 
 
 def random_colors(N, bright=True):
@@ -72,11 +73,11 @@ def random_colors(N, bright=True):
 def apply_mask(image, mask, color, alpha=0.5):
     """Apply the given mask to the image.
     """
-    for c in range(3):
-        image[:, :, c] = np.where(mask == 1,
-                                  image[:, :, c] *
-                                  (1 - alpha) + alpha * color[c] * 255,
-                                  image[:, :, c])
+    # for c in range(3):
+    #     image[:, :, c] = np.where(mask == 1,
+    #                               image[:, :, c] *
+    #                               (1 - alpha) + alpha * color[c] * 255,
+    #                               image[:, :, c])
     return image
 
 
@@ -84,7 +85,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
                       scores=None, title="",
                       figsize=(16, 16), ax=None,
                       show_mask=True, show_bbox=True,
-                      colors=None, captions=None):
+                      colors=None, captions=None,person_area = []):
     """
     boxes: [num_instance, (y1, x1, y2, x2, class_id)] in image coordinates.
     masks: [height, width, num_instances]
@@ -99,6 +100,15 @@ def display_instances(image, boxes, masks, class_ids, class_names,
     """
     # Number of instances
     N = boxes.shape[0]
+    print(boxes)
+    for i in boxes:
+        print(i)
+        sqr_a = pow((i[1]-i[3]),2)
+        sqr_b = pow((i[0]-i[2]),2)
+        area = np.sqrt(sqr_a + sqr_b)
+        person_area.append(area)
+
+
     if not N:
         print("\n*** No instances to display *** \n")
     else:
@@ -129,6 +139,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             # Skip this instance. Has no bbox. Likely lost in image cropping.
             continue
         y1, x1, y2, x2 = boxes[i]
+        print(boxes[i])
         if show_bbox:
             p = patches.Rectangle((x1, y1), x2 - x1, y2 - y1, linewidth=2,
                                 alpha=0.7, linestyle="dashed",
@@ -148,8 +159,8 @@ def display_instances(image, boxes, masks, class_ids, class_names,
 
         # Mask
         mask = masks[:, :, i]
-        if show_mask:
-            masked_image = apply_mask(masked_image, mask, color)
+        # if show_mask:
+        #     masked_image = apply_mask(masked_image, mask, color)
 
         # Mask Polygon
         # Pad to ensure proper polygons for masks that touch image edges.
@@ -163,8 +174,18 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             p = Polygon(verts, facecolor="none", edgecolor=color)
             ax.add_patch(p)
     ax.imshow(masked_image.astype(np.uint8))
+    print("Image Shape:",masked_image.shape, masked_image.shape[0]*0.8828125,masked_image.shape[2]*0.7875)
+    ax.figure.savefig("/home/shivansh/Desktop/DE_resnet_unet_hyb/images/skate_board_detected.jpg")
     if auto_show:
         plt.show()
+
+    return person_area
+
+    #     while(1):
+    #         plt.show()
+    #         if 0xFF == ord('q'):
+    #             break
+    # return
 
 
 def display_differences(image,
