@@ -185,11 +185,7 @@ person_area = visualize.display_instances(image, r['rois'], r['masks'], r['class
 # print("detection_area_list:",person_area_list)
 # print("detection_class_count:",detection_list)
 
-# consumer_key = "QHdoSPNYZdSrH2SITinjXH7B1"
-# consumer_secret = "FbN8B5FtrwRjdJvm0lZpHwFITC6JLfkDNqlDkKpkpiVAJqX0jI"
 
-# access_token = "428768497-5PaJi8GvUSqyHkOb6wA6NM4MVECQstWlLpzTWHIC"
-# access_token_secret = "wOLACcTCYchHJOBs1P9UaxDaucSHUaJyapa9OJhMVuGuE"
 
 # auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 # auth.set_access_token(access_token, access_token_secret)
